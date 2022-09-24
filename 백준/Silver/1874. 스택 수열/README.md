@@ -1,4 +1,4 @@
-# [Silver III] 스택 수열 - 1874 
+# [Silver II] 스택 수열 - 1874 
 
 [문제 링크](https://www.acmicpc.net/problem/1874) 
 
