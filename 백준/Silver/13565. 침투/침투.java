@@ -1,0 +1,65 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main {
+	static int[] dx = {-1, 1, 0, 0};
+	static int[] dy = {0, 0, -1, 1};
+	static boolean[][] c;
+	static int[][] d;
+	static int count;
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		int a = Integer.parseInt(st.nextToken());
+		int b = Integer.parseInt(st.nextToken());
+		c = new boolean[a][b];
+		d = new int[a][b];
+		for(int i = 0; i < a; i++) {
+			String e = br.readLine();
+			for(int j = 0; j < b; j++) {
+				if(e.charAt(j) == '0') {
+					d[i][j] = 1;
+				}
+			}
+		}
+			for(int j = 0; j < b; j++) {
+				if(d[0][j] == 1 && !c[0][j]) {
+					dfs(0, j);
+				}
+			}
+		boolean check = false;
+		for(int j = 0; j < b; j++) {
+			if(c[a - 1][j]) {
+				check = true;
+				break;
+			}
+		}
+		if(check) {
+			sb.append("YES");
+		}else {
+			sb.append("NO");
+		}
+		bw.write(sb.toString());
+		bw.flush();
+		bw.close();
+		br.close();
+	}
+	private static void dfs(int i, int j) {
+		// TODO Auto-generated method stub
+			if(i < 0 || j < 0 || i >= d.length || j >= d[0].length) return;
+			if(d[i][j] == 0 || c[i][j]) return;
+			if(d[i][j] == 1 && !c[i][j]) c[i][j] = true;
+			dfs(i + 1, j);
+			dfs(i, j + 1);
+			dfs(i - 1, j);
+			dfs(i, j - 1);
+	}
+
+}
