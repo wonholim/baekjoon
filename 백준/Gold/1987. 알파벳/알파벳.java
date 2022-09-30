@@ -18,9 +18,9 @@ public class Main {
 	static int a;
 	static int b;
 	static int[][] c;
+	static boolean[] d;
 	static int count;
 	static int max;
-	static ArrayList<Integer> list;
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -29,8 +29,8 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		a = Integer.parseInt(st.nextToken());
 		b = Integer.parseInt(st.nextToken());
-		list = new ArrayList<>();
 		c = new int[a][b];
+		d = new boolean[26];
 		count = 0;
 		max = 0;
 		for(int i = 0; i < a; i++) {
@@ -39,9 +39,8 @@ public class Main {
 				c[i][j] = g.charAt(j) - 'A';
 			}
 		}
-		list.add(c[0][0]);
 		dfs(0, 0);
-		sb.append(max + 1);
+		sb.append(max);
 		bw.write(sb.toString());
 		bw.flush();
 		bw.close();
@@ -49,17 +48,21 @@ public class Main {
 	}
 	private static void dfs(int i, int j) {
 		// TODO Auto-generated method stub
-		for(int k = 0; k < 4; k++) {
-			int q = i + dx[k];
-			int w = j + dy[k];
-			if(q >= 0 && w >= 0 && q < a && w < b && !list.contains(c[q][w])) {
-				count++;
-				list.add(c[q][w]);
-				dfs(q, w);
-				list.remove(list.size() - 1);
-				max = Math.max(count, max);
-				count--;
+		if(d[c[i][j]]) {
+			max = Math.max(count, max);
+			return;
+		}else {
+			d[c[i][j]] = true;
+			for(int k = 0; k < 4; k++) {
+				int q = i + dx[k];
+				int w = j + dy[k];
+				if(q >= 0 && w >= 0 && q < a && w < b) {
+					count++;
+					dfs(q, w);
+					count--;
+				}
 			}
+			d[c[i][j]] = false;
 		}
 	}
 
