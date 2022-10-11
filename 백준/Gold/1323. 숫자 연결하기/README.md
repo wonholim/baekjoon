@@ -1,4 +1,4 @@
-# [Gold V] 숫자 연결하기 - 1323 
+# [Gold IV] 숫자 연결하기 - 1323 
 
 [문제 링크](https://www.acmicpc.net/problem/1323) 
 
