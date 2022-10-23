@@ -28,21 +28,29 @@ public class Main {
 				b[j] = true;
 			}
 		}
-		for(int i = 0; i < list.size(); i++) {
-			if(list.get(i) >= a) break;
-			for(int j = 0; j < list.size(); j++) {
-				if(list.get(i) + list.get(j) >= a) break;
-				for(int k = 0; k < list.size(); k++) {
-					if(list.get(i) + list.get(j) + list.get(k) >= a) break;
-					for(int l = 0; l < list.size(); l++) {
-						if(list.get(i) +list.get(j) + list.get(k) + list.get(l) < a) {
-							continue;
-						}else if(list.get(i) +list.get(j) + list.get(k) + list.get(l) > a) {
-							break;
-						}else {
-							System.out.println(list.get(i)+ " " +list.get(j) + " " + list.get(k) + " " + list.get(l));
-							return;
-						}
+		if(a % 2 == 1) {
+			a -= 5;
+			for(int i = 0; i < list.size(); i++) {
+				if(list.get(i) >= a) break;
+				for(int j = 0; j < list.size(); j++) {
+					if(list.get(i) + list.get(j) < a) continue;
+					else if(list.get(i) + list.get(j) > a) break;
+					else {
+						System.out.println("2 3 " + list.get(i) + " " + list.get(j));
+						return;
+					}
+				}
+			}
+		}else {
+			a -= 4;
+			for(int i = 0; i < list.size(); i++) {
+				if(list.get(i) >= a) break;
+				for(int j = 0; j < list.size(); j++) {
+					if(list.get(i) + list.get(j) < a) continue;
+					else if(list.get(i) + list.get(j) > a) break;
+					else {
+						System.out.println("2 2 " + list.get(i) + " " + list.get(j));
+						return;
 					}
 				}
 			}
