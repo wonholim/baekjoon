@@ -1,6 +1,4 @@
 
-
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -25,9 +23,9 @@ public class Main {
 			String b = st.nextToken();
 			s.add(b.charAt(0));
 			s.add(b.charAt(b.length() - 1));
+			if(s.size() > 1) {System.out.println(0); return;}
 		}
-		if(s.size() == 1) sb.append(1);
-		else sb.append(0);
+		sb.append(1);
 		bw.write(sb.toString());
 		bw.flush();
 		bw.close();
