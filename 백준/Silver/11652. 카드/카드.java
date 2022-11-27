@@ -1,3 +1,5 @@
+
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -17,26 +19,27 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringBuilder sb = new StringBuilder();
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		long a = Long.parseLong(st.nextToken());
-		Map<Long, Integer> m = new HashMap<>();
-		Set<Long> s = new HashSet<>();
-		while(a --> 0) {
-			long b = Long.parseLong(br.readLine());
-			m.put(b, m.getOrDefault(b, 0) + 1);
-			s.add(b);
+		int t = Integer.parseInt(br.readLine());
+		long[] a = new long[t];
+		for (int i = 0; i < t; i++) {
+			a[i] = Long.parseLong(br.readLine());
 		}
-		long max = 0;
-		Long[] c = s.toArray(new Long[0]);
-		Arrays.sort(c);
-		long d = 0;
-		for(long g : c) {
-			if(m.get(g) > max) {
-				max = m.get(g);
-				d = g;
+		Arrays.sort(a);
+		int modeCnt = 1;
+		int curCnt = 1;
+		long mode = a[0];
+		for(int i = 1; i < t; i++) {
+			if(a[i - 1] == a[i]) {
+				curCnt++;
+			}else {
+				curCnt = 1;
+			}
+			if(modeCnt < curCnt) {
+				modeCnt = curCnt;
+				mode = a[i];
 			}
 		}
-		sb.append(d);
+		sb.append(mode);
 		bw.write(sb.toString());
 		bw.flush();
 		bw.close();
