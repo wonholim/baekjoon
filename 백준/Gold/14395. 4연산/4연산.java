@@ -31,25 +31,25 @@ public class Main {
 		long a = Long.parseLong(st.nextToken());
 		long b = Long.parseLong(st.nextToken());
 		if(a == b) {System.out.println(0); return;}
-		d = new boolean[1000000001];
+		d = new boolean[(int) b + 1];
 		q = new ArrayDeque<>();
 		q.offer(new Node("", a));
 		while(!q.isEmpty()) {
 			Node n = q.poll();
 			if(n.g == b) {System.out.println(n.out); return;}
-			if(n.g * n.g <= 1000000000 && !d[(int) (n.g * n.g)]) {
+			if(n.g * n.g <= b && !d[(int) (n.g * n.g)]) {
 				d[(int) (n.g * n.g)] = true;
 				q.offer(new Node(n.out + "*", n.g * n.g));
 			}
-			if(n.g + n.g <= 1000000000 && !d[(int) (n.g + n.g)]) {
+			if(n.g + n.g <= b && !d[(int) (n.g + n.g)]) {
 				d[(int) (n.g + n.g)] = true;
 				q.offer(new Node(n.out + "+", n.g + n.g));
 			}
-			if(n.g - n.g <= 1000000000 && !d[(int) (n.g - n.g)]) {
+			if(n.g - n.g <= b && !d[(int) (n.g - n.g)]) {
 				d[(int) (n.g - n.g)] = true;
 				q.offer(new Node(n.out + "-", n.g - n.g));
 			}
-			if(n.g != 0 && n.g / n.g <= 1000000000 && !d[(int) (n.g / n.g)]) {
+			if(n.g != 0 && n.g / n.g <= b && !d[(int) (n.g / n.g)]) {
 				d[(int) (n.g / n.g)] = true;
 				q.offer(new Node(n.out + "/", n.g / n.g));
 			}
