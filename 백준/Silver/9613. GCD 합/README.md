@@ -1,4 +1,4 @@
-# [Silver III] GCD 합 - 9613 
+# [Silver IV] GCD 합 - 9613 
 
 [문제 링크](https://www.acmicpc.net/problem/9613) 
 
