@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -21,19 +22,8 @@ public class Main {
 		for(int i = 0; i < t; i++) {
 			c[i] = Integer.parseInt(st.nextToken());
 		}
-		int max = 898989898;
-		int index = 0;
-		for(int i = 1; i <= 10000; i++) {
-			int sum = 0;
-			for(int j = 0; j < t; j++) {
-				sum += Math.abs(c[j] - i);
-			}
-			if(max > sum) {
-				max = sum;
-				index = i;
-			}
-		}
-		sb.append(index);
+		Arrays.sort(c);
+		sb.append(c[((t + 1) / 2) - 1]);
 		bw.write(sb.toString());
 		bw.flush();
 		bw.close();
