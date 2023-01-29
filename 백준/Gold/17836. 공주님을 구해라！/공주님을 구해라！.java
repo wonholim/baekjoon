@@ -1,4 +1,5 @@
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -42,7 +43,9 @@ public class Main {
 			}
 		}
 		firstSearch();
-		if(sword[0] != -1) secondSearch();
+		if(sword[0] != -1) {
+			min = Math.min(min, (n - sword[0] - 1) + (m - sword[1] - 1) + sword[2]);
+		}
 		if(min > t) sb.append("Fail");
 		else sb.append(min);
 		bw.write(sb.toString());	
@@ -74,26 +77,5 @@ public class Main {
 				}
 			}
 		}
-		d = new boolean[n][m];
 	}
-	private static void secondSearch() {
-		// TODO Auto-generated method stub
-		q.offer(sword);
-		d[sword[0]][sword[1]] = true;
-		while(!q.isEmpty()) {
-			int[] g = q.poll();
-			if(g[0] == n - 1 && g[1] == m - 1) min = Math.min(min, g[2]);
-			for(int k = 0; k < 4; k++) {
-				int i = g[0] + dx[k];
-				int j = g[1] + dy[k];
-				if(i >= 0 && j >= 0 && i < n && j < m) {
-					if(!d[i][j]) {
-						d[i][j] = true;
-						q.offer(new int[] {i, j, g[2] + 1});
-					}
-				}
-			}
-		}
-	}
-
 }
