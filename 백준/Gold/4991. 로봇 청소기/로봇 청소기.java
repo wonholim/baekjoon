@@ -1,4 +1,5 @@
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class Main {
 			c = new int[n][m];
 			garbage = 0;
 			searchQueue = new ArrayDeque<>();
-			d = new int[n][m][1 << 11];
+			d = new int[n][m][2048];
 			for(int i = 0; i < n; i++) {
 				String k = br.readLine();
 				for(int j = 0; j < m; j++) {
@@ -49,7 +50,7 @@ public class Main {
 					}
 				}
 			}
-			garbageAll = (1 << garbage) - 1;
+			garbageAll =  (int)(Math.pow(2, garbage)) - 1;
 			boolean check = false;
 			while(!searchQueue.isEmpty()) {
 				int[] g = searchQueue.poll();
@@ -64,9 +65,9 @@ public class Main {
 					if( i >= 0 && j >= 0 && i < n && j < m) {
 						if(c[i][j] != -1) {
 							if(c[i][j] > 0) {
-								if(d[i][j][g[2] | (1 << (c[i][j] - 1))] == 0) {
-									d[i][j][g[2] | (1 << (c[i][j] - 1))] = d[g[0]][g[1]][g[2]] + 1;
-									searchQueue.offer(new int[] {i, j, g[2] | (1 << (c[i][j] - 1))});
+								if(d[i][j][g[2] | (int)(Math.pow(2, c[i][j] - 1))] == 0) {
+									d[i][j][g[2] | (int)(Math.pow(2, c[i][j] - 1))] = d[g[0]][g[1]][g[2]] + 1;
+									searchQueue.offer(new int[] {i, j, g[2] | (int)(Math.pow(2, c[i][j] - 1))});
 								}
 							}
 							if(c[i][j] == 0) {
