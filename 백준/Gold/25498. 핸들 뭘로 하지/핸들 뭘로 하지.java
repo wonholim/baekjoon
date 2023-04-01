@@ -1,22 +1,8 @@
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Set;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
+	//Vardy는 제 부계정이에요!
 	static class Node implements Comparable<Node>{
 		int t;
 		String k;
@@ -29,7 +15,6 @@ public class Main {
 			// TODO Auto-generated method stub
 			return o.k.compareTo(this.k);
 		}
-		
 	}
 	static ArrayList<Integer>[] list;
 	static Queue<Integer> q;
@@ -76,14 +61,14 @@ public class Main {
 				Node cur = ans.get(0);
 				q.offer(cur.t);
 				sb.append(cur.k);
-				for(int i = 1; i < ans.size(); i++) {
+				for(int i = 1; i < ans.size(); i++) 
 					if(cur.k.equals(ans.get(i).k)) {
 						q.offer(ans.get(i).t);
 					}
 				}
 				ans.clear();
 			}
-		}
+		
 		bw.write(sb.toString());
 		bw.flush();
 		bw.close();
