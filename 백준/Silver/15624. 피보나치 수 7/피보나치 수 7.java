@@ -22,9 +22,7 @@ public class Main {
 	}
 	private static long dp(int a) {
 		// TODO Auto-generated method stub
-		if(a == 0) return 0;
-		if(a == 1) return 1;
-		if(a == 2) return 1;
+		if(a <= 2) return 1;
 		if(b[a] > 0) return b[a];
 		return b[a] =  ((dp(a - 1) + dp(a - 2)) % 1000000007);
 	}
