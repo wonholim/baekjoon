@@ -27,7 +27,6 @@ public class Main {
 			c[i] = line.charAt(i - 1);
 			if(!ts.contains(c[i])) ts.add(c[i]);
 		}
-		
 		Collections.sort(ts);
 		for(int i = 0; i < ts.size(); i++) {
 			m.put(ts.get(i), i);
@@ -39,10 +38,6 @@ public class Main {
 				if(c[j] == d) {
 					prefixSum[i][j] = 1;
 				}
-			}
-		}
-		for(int i = 0; i < ts.size(); i++) {
-			for(int j = 1; j < c.length; j++) {
 				prefixSum[i][j] += prefixSum[i][j - 1];
 			}
 		}
