@@ -44,6 +44,7 @@ public class Main {
 		}
 		list = new ArrayList<>();
 		cooking(0, new int[5], new int[] {0, 1, 2, 3, 4}, new boolean[5]);
+		OUT :
 		for (int a = 0; a < n - 1; a++) {
 			for (int b = 0; b < n - 1; b++) {
 				for (int c = 0; c < n - 1; c++) {
@@ -70,6 +71,7 @@ public class Main {
 										min = Math.min(min, cur.dis);
 										break;
 									}
+									if(min == 12) break OUT;
 									for (int o = 0; o < 6; o++) {
 										int i = cur.x + dx[o];
 										int j = cur.y + dy[o];
