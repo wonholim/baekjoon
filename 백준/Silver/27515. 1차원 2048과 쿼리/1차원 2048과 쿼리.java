@@ -16,49 +16,29 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int k = Integer.parseInt(st.nextToken());
-		int[] arr = new int[64];
+		long sum = 0L;
 		while(k --> 0) {
 			String query = br.readLine();
-			long num = Long.parseLong(query.substring(1, query.length()));
-			int de = cook(num);
 			if(query.charAt(0) == '+') {
-				arr[de]++;
-			}else {
-				arr[de]--;
+				sum += Long.parseLong(query.substring(1));
+			} else {
+				sum -= Long.parseLong(query.substring(1));
 			}
-			int[] tmp = arr.clone();
-			sb.append(cooking(tmp)).append("\n");
+			
+			if(sum == 0) {
+				sb.append("0\n");
+				continue;
+			}
+			long m = 0;
+			for(int i = 62; i >= 0; i--) {
+				m = 1L << i;
+				if((sum & m) == m) break;
+			}
+			sb.append(m + "\n");
 		}
 		bw.write(sb.toString());
 		bw.flush();
 		bw.close();
 		br.close();
 	}
-
-	private static long cooking(int[] tmp) {
-		// TODO Auto-generated method stub
-		long max = 0;
-		
-		for(int i = 0; i < tmp.length - 2; i++) {
-			if(tmp[i] >= 2) {
-				tmp[i + 1] += tmp[i] / 2;
-			}
-		}
-		for(int i = 0; i < tmp.length - 1; i++) {
-			if(tmp[i] != 0) {
-				max = (long) Math.pow(2, i);
-			}
-		}
-		return max;
-	}
-
-	private static int cook(long num) {
-		// TODO Auto-generated method stub
-		int i = 0;
-		for(; i < 63; i++) {
-			if(Math.pow(2, i) == num) break;
-		}
-		return i;
-	}
-
 }
