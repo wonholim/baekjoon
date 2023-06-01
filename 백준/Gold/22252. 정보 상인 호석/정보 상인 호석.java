@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -20,12 +19,7 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
-		PriorityQueue<Long>[] pq = new PriorityQueue[100001];
-		for(int i = 1; i <= 100000; i++) {
-			pq[i] = new PriorityQueue<>(Collections.reverseOrder());
-		}
-		Map<String, Integer> m = new HashMap<>();
-		int count = 1;
+		Map<String, PriorityQueue<Integer>> m = new HashMap<>();
 		long sum = 0;
 		while(n --> 0) {
 			st = new StringTokenizer(br.readLine());
@@ -34,16 +28,16 @@ public class Main {
 			int i = Integer.parseInt(st.nextToken());
 			if(select == 1) {
 				if(m.get(name) == null) {
-					m.put(name, count++);
+					m.put(name, new PriorityQueue<>(Collections.reverseOrder()));
 				}
 				while(i --> 0) {
-					pq[m.get(name)].offer(Long.parseLong(st.nextToken()));
+					m.get(name).offer(Integer.parseInt(st.nextToken()));
 				}
 			} else {
 				if(m.get(name) == null) continue;
 				while(i --> 0) {
-					if(pq[m.get(name)].isEmpty()) break;
-					sum += pq[m.get(name)].poll();
+					if(m.get(name).isEmpty()) break;
+					sum += m.get(name).poll();
 				}
 			}
 		}
