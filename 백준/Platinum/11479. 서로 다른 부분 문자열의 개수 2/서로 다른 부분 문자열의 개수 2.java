@@ -1,76 +1,111 @@
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
-	static Integer[] g = new Integer[100_000_1];
-	static Integer[] tg = new Integer[100_000_1];
-	static Integer[] sa = new Integer[100_000_1];
-	static Integer[] lcp = new Integer[100_000_1];
-	static Integer[] r = new Integer[100_000_1];
-	static int t = 1;
+	static class Suffix implements Comparable<Suffix>{
+		int index;
+		int rank;
+		int nextRank;
+
+		public Suffix(int index, int rank) {
+			this.index = index;
+			this.rank = rank;
+		}
+
+		@Override
+		public int compareTo(Suffix o) {
+			if(this.rank != o.rank) {
+				return this.rank - o.rank;
+			}
+			return this.nextRank - o.nextRank;
+		}
+	}
+	public static String str;
+	public static ArrayList<Integer> suffix;
 	static int n;
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringBuilder sb = new StringBuilder();
-		char[] c = br.readLine().toCharArray();
-		n = c.length;
-		for(int i = 0; i < n; i++) {
-			sa[i] = i;
-			g[i] = c[i] - 'a';
-		}
-		
-		while(t <= n) {
-			g[n] = -1;
-			Arrays.sort(sa, 0, n, (x, y) -> {
-			    if (g[x] == g[y]) {
-			        return Integer.compare(g[x + t], g[y + t]);
-			    }
-			    return Integer.compare(g[x], g[y]);
-			});
-			tg[sa[0]] = 0;
-			for(int i = 1; i < n; i++) {
-				if(cmp(sa[i - 1], sa[i])) tg[sa[i]] = tg[sa[i - 1]] + 1;
-				else tg[sa[i]] = tg[sa[i - 1]];
-			}
-			for(int i = 0; i < n; i++) g[i] = tg[i];
-			t <<= 1;
-		}
-		
-		for(int i = 0; i < n; i++) {
-			r[sa[i]] = i;
-		}
-		int l = 0;
-		for(int i = 0; i < n; i++) {
-			int k = r[i];
-			if(k != 0) {
-				int j = sa[k - 1];
-				while(len(j + l, i +  l) && c[j + l] == c[i + l]) {
-					l++;
-				}
-				lcp[k] = l;
-				if(l != 0) l--;
-			}
-		}
-		lcp[0] = 0;
+		String str = br.readLine();
+		Suffix[] arr = makeSuffixArray(str);
+		int[] lcp = Lcp(str, arr);
 		long sum = 0;
-		for(int i = 0; i < n; i++) {
-			sum += n - sa[i] - lcp[i];
+		sum += n - arr[0].index;
+		for(int i = 1; i < n; i++) {
+			sum += n - arr[i].index - lcp[i - 1];
 		}
 		sb.append(sum);
-		bw.write(sb.toString());
-		bw.flush();
-		bw.close();
-		br.close();
+		System.out.println(sb.toString());
 	}
-	private static boolean len(int i, int j) {
-		// TODO Auto-generated method stub
-		return i < n && j < n ? true : false;
+	public static int[] Lcp(String s , Suffix[] suffixArray) {
+		n = suffixArray.length;
+		int[] lcp = new int[n-1];
+		int[] suffix = new int[n];
+		for (int i = 0; i < n; i++) {
+			suffix[suffixArray[i].index] = i;
+		}
+		int t = 0;
+		for (int i = 0; i < n; i++) {
+			if(suffix[i] == n-1) {
+				t = 0;
+				continue;
+			}
+			int j = suffixArray[suffix[i] + 1].index;
+			while(i + t < n && j + t < n) {
+				if(s.charAt(i+t) != s.charAt(j+t))
+					break;
+				t++;
+			}
+
+            lcp[suffix[i]] = t;  
+            if(t > 0)
+            	t--;
+		}
+		return lcp;
 	}
-	private static boolean cmp(int x, int y) {
-		// TODO Auto-generated method stub
-		if(g[x] == g[y]) return g[x + t] < g[y + t];
-		return g[x] < g[y];
+	public static Suffix[] makeSuffixArray(String s) {
+		n = s.length();
+		Suffix[] suffixes = new Suffix[n];
+		for (int i = 0; i < n; i++) {
+			suffixes[i] = new Suffix(i, s.charAt(i) - 'a');
+		}
+		for (int i = 0; i + 1 < n; i++) {
+			suffixes[i].nextRank = suffixes[i+1].rank;
+		}
+		suffixes[n-1].nextRank = -1;
+		Arrays.sort(suffixes);
+		int[] temp = new int[n];
+		for (int t = 2; t < n; t <<= 1) {
+			int rank = 0;
+			int piv = suffixes[0].rank;
+			suffixes[0].rank = rank;
+			temp[suffixes[0].index] = 0;
+			for (int i = 1; i < n; i++) {
+				if(suffixes[i].rank == piv && suffixes[i].nextRank == suffixes[i-1].nextRank) {
+					piv = suffixes[i].rank;
+					suffixes[i].rank = rank;
+				} else {
+					piv = suffixes[i].rank;
+					suffixes[i].rank = ++rank;
+				}
+				temp[suffixes[i].index] = i;
+			}
+			for (int i = 0; i < n; i++) {
+				int nextindex = suffixes[i].index + t;
+				if(nextindex >= n) {
+					suffixes[i].nextRank = -1;
+					continue;
+				}
+				suffixes[i].nextRank = suffixes[temp[nextindex]].rank;
+			}
+			Arrays.sort(suffixes);
+			if(rank == n - 1) {
+				break;
+			}
+		}
+		return suffixes;
 	}
 }
