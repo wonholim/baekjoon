@@ -8,7 +8,7 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 		int n = Integer.parseInt(br.readLine());
-		for (int i = 1; i <= n; i++) {
+		for (int i = n / 2; i <= n; i++) {
 			m.put(i, new ArrayList<>());
 			m.get(i).add(n);
 			m.get(i).add(i);
