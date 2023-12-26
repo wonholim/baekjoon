@@ -22,14 +22,13 @@ public class Main {
 		for (int i = 1; i <= h; i++) {
 			list.add(topPrefix[i] + bottomPrefix[h - i + 1]);
 		}
-		
 		Collections.sort(list);
-		
 		System.out.println(
 				list.get(0)
 				+ " " 
 				+ list.stream()
-					.takeWhile(x -> list.get(0).equals(x))
+					.mapToInt(x -> x.intValue())
+					.takeWhile(x -> list.get(0) == x)
 					.count()
 		);
 	}
